@@ -1,0 +1,19 @@
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: theme("borderColor.DEFAULT", currentColor); /* 2 */
+}
+
+:root {
+  --color-sky: 14, 165, 233;
+  --color-purple: 168, 85, 247;
+  --color-pink: 236, 72, 153;
+  --color-brand: var(--color-sky);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="text-brand">
     <ContentDoc />
   </main>
 </template>
