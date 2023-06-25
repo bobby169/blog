@@ -1,16 +1,14 @@
 <script setup>
 const route = useRoute();
-const { path } = useRoute();
-console.info(path);
 const slug = route.params.slug[0];
-const { data: article } = await useAsyncData("article", () =>
-  queryContent("/articles")
+const { data: article } = await useAsyncData("post", () =>
+  queryContent("/post")
     .where({ _file: { $contains: slug } })
     .findOne()
 );
 console.info(article.value.tags);
 const { data: tags } = await useAsyncData("tags", () =>
-  queryContent("/tags")
+  queryContent("/tag")
     .only(["name"])
     .where({ name: { $containsAny: article.value.tags } })
     .find()
@@ -18,11 +16,11 @@ const { data: tags } = await useAsyncData("tags", () =>
 
 console.info(tags);
 
-const [prev, next] = await queryContent("/articles")
+const [prev, next] = await queryContent("/post")
   .only(["_path", "title"])
   // .sort({ date: 1 })
   // .where({ isArchived: false })
-  .findSurround(`/articles/${slug}`);
+  .findSurround(`/post/${slug}`);
 console.info(prev, next, "aaaaaaa");
 
 const formatDate = (date) => {

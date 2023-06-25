@@ -1,16 +1,16 @@
 <script setup>
-const { data: articles } = await useAsyncData("articles", () =>
-  queryContent("/articles")
-    .only(["title", "description", "img", "slug", "author"])
+const { data: articles } = await useAsyncData("post", () =>
+  queryContent("/post")
+    .only(["title", "description", "img", "slug", "author", "_path"])
     .sort({ title: 1 })
     .find()
 );
 
-console.info(articles, "articles");
+console.info(articles, "post");
 
 const { data: tags } = await useAsyncData("tags", () =>
-  queryContent("/tags")
-    .only(["name", "description", "img", "slug"])
+  queryContent("/tag")
+    .only(["name", "description", "img", "_path"])
     .sort({ name: 1 })
     .find()
 );
@@ -29,7 +29,7 @@ console.info(tags, "tags");
         class="xs:w-full md:w-1/2 px-2 xs:mb-6 md:mb-12 article-card"
       >
         <NuxtLink
-          to="/a"
+          :to="article._path"
           class="flex transition-shadow duration-150 ease-in-out shadow-sm hover:shadow-md xxlmax:flex-col"
         >
           <img
@@ -57,7 +57,7 @@ console.info(tags, "tags");
         :key="tag.slug"
         class="xs:w-full md:w-1/3 lg:flex-1 px-2 text-center"
       >
-        <NuxtLink :to="`/blog/tag/${tag.slug}`" class="">
+        <NuxtLink class="" :to="tag._path">
           <p
             class="font-bold text-gray-600 uppercase tracking-wider font-medium text-ss"
           >
