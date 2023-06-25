@@ -42,7 +42,7 @@ console.info(tags, "tags");
             class="p-6 flex flex-col justify-between xxlmin:w-1/2 xxlmax:w-full"
           >
             <h2 class="font-bold">{{ article.title }}</h2>
-            <p>by {{ article.author.name }}</p>
+            <p v-if="article.author">by {{ article.author.name }}</p>
             <p class="font-bold text-gray-600 text-sm">
               {{ article.description }}
             </p>
@@ -85,25 +85,6 @@ console.info(tags, "tags");
     </footer>
   </div>
 </template>
-
-<script>
-// export default {
-//   async asyncData({ $content, params }) {
-//     const articles = await $content("articles")
-//       .only(["title", "description", "img", "slug", "author"])
-//       .sortBy("createdAt", "desc")
-//       .fetch();
-//     const tags = await $content("tags")
-//       .only(["name", "description", "img", "slug"])
-//       .sortBy("createdAt", "asc")
-//       .fetch();
-//     return {
-//       articles,
-//       tags,
-//     };
-//   },
-// };
-</script>
 
 <style class="postcss">
 .article-card {
