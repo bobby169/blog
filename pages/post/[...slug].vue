@@ -84,7 +84,7 @@ const formatDate = (date) => {
       <p class="pb-4">Post last updated: {{ formatDate(article.updatedAt) }}</p>
       <!-- table of contents -->
       <nav class="pb-6">
-        <ul>
+        <ul v-if="article.body && article.body.toc.links.length">
           <li
             v-for="link of article.body.toc.links"
             :key="link.id"
