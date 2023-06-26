@@ -23,12 +23,18 @@ export default defineComponent({
       type: String,
       default: null,
     },
+    class: {
+      type: String,
+      default: "",
+    },
   },
 });
 </script>
 
 <template>
-  <slot />
+  <div :class="class">
+    <slot />
+  </div>
 </template>
 
 <style>
