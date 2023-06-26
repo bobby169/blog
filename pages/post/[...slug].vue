@@ -6,22 +6,22 @@ const { data: article } = await useAsyncData("post", () =>
     .where({ _file: { $contains: slug } })
     .findOne()
 );
-console.info(article.value.tags);
+console.info(article);
+// console.info(article.value.tags);
 const { data: tags } = await useAsyncData("tags", () =>
   queryContent("/tag")
-    .only(["name"])
+    .only(["name", "_path"])
     .where({ name: { $containsAny: article.value.tags } })
     .find()
 );
 
-console.info(tags);
+// console.info(tags);
 
 const [prev, next] = await queryContent("/post")
   .only(["_path", "title"])
   // .sort({ date: 1 })
   // .where({ isArchived: false })
   .findSurround(`/post/${slug}`);
-console.info(prev, next, "aaaaaaa");
 
 const formatDate = (date) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -50,12 +50,12 @@ const formatDate = (date) => {
           <p v-if="article.author">{{ article.author.name }}</p>
         </div>
         <h1 class="text-6xl font-bold">{{ article.title }}</h1>
-        <span v-for="(tag, id) in article.tags" :key="id">
-          <NuxtLink>
+        <span v-for="(tag, id) in tags" :key="id">
+          <NuxtLink :to="tag._path">
             <span
               class="truncate uppercase tracking-wider font-medium text-ss px-2 py-1 rounded-full mr-2 mb-2 border border-light-border dark:border-dark-border transition-colors duration-300 ease-linear"
             >
-              <!-- {{ tags[tag].name }} -->
+              {{ tag.name }}
             </span>
           </NuxtLink>
         </span>
@@ -86,7 +86,7 @@ const formatDate = (date) => {
       <nav class="pb-6">
         <ul>
           <li
-            v-for="link of article.toc"
+            v-for="link of article.body.toc.links"
             :key="link.id"
             :class="{
               'font-semibold': link.depth === 2,
@@ -105,7 +105,7 @@ const formatDate = (date) => {
         </ul>
       </nav>
       <ContentRenderer :value="article" />
-      <author :author="article.author" />
+      <author v-if="article.author" :author="article.author" />
       <PrevNext :prev="prev" :next="next" class="mt-8" />
     </div>
   </article>
