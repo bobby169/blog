@@ -13,7 +13,7 @@
     >
       <li v-for="article of articles" :key="article.slug">
         <NuxtLink
-          to="/"
+          :to="article._path"
           class="flex px-4 py-2 items-center leading-5 transition ease-in-out duration-150 text-green-500 hover:text-black"
         >
           {{ article.title }}
@@ -37,12 +37,12 @@ export default {
         return;
       }
       const { data: articles } = await useAsyncData("articles", () =>
-        queryContent("/articles")
+        queryContent("/post")
           .where({ title: { $contains: searchQuery } })
           .limit(6)
           .find()
       );
-      // console.info(articles);
+      console.info(articles);
       this.articles = articles;
     },
   },
