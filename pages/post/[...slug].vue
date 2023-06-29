@@ -104,7 +104,9 @@ const formatDate = (date) => {
           </li>
         </ul>
       </nav>
-      <ContentRenderer :value="article" />
+      <div class="prose max-w-none pt-10 pb-8 dark:prose-dark">
+        <ContentRenderer :value="article"></ContentRenderer>
+      </div>
       <author v-if="article.author" :author="article.author" />
       <PrevNext :prev="prev" :next="next" class="mt-8" />
     </div>

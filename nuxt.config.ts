@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/content", "@nuxtjs/tailwindcss"],
   content: {
+    markdown: {
+      mdc: true,
+    },
     highlight: {
       // Theme used in all color schemes.
       // theme: 'github-light'

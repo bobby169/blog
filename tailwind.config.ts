@@ -1,9 +1,13 @@
-/** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+
 module.exports = {
-  // darkMode 默认值为 media，即媒体查询适配
-  // 现在被我改为了 class 选择器策略，同时修改了选择器为 .dark-mode (见第二个参数)
-  darkMode: ["class", ".dark-mode"],
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
+  // adding to default config of `@nuxtjs/tailwindcss` module
   content: [
+    "content/**/*.md",
     "./components/**/*.{js,vue,ts}",
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
@@ -11,60 +15,160 @@ module.exports = {
     "./nuxt.config.{js,ts}",
     "./app.vue",
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        //  text-brand, bg-brand等
-        // brand: withOpacityValue('--color-brand')
-        brand: "rgba(var(--color-brand), <alpha-value>)",
-        cyan: "#9cdbff",
-      },
       spacing: {
-        "96": "24rem",
-        "128": "32rem",
+        "9/16": "56.25%",
       },
-      height: {
-        "84": "22rem",
+      lineHeight: {
+        11: "2.75rem",
+        12: "3rem",
+        13: "3.25rem",
+        14: "3.5rem",
       },
-      width: {
-        "3/2": "150%",
-        "4/2": "200%",
-        "1/2-screen": "50vw",
+      fontFamily: {
+        sans: ["Inter Variable", ...defaultTheme.fontFamily.sans],
       },
-      margin: {
-        "-fullh": "-100vh",
+      colors: {
+        primary: colors.teal,
+        gray: colors.neutral,
       },
-    },
-    screens: {
-      xs: "320px",
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      xxlmin: "1351px",
-      xxlmax: { max: "1350px" },
-    },
-    fontFamily: {
-      display: ["Quicksand", "sans-serif"],
-      body: ["Quicksand", "sans-serif"],
-    },
-    borderWidth: {
-      default: "1px",
-      "0": "0",
-      "2": "2px",
-      "4": "4px",
-    },
-    inset: {
-      "0": 0,
-      "16": "16px",
-      "32": "32px",
-      "64": "64px",
-      "2rem": "2rem",
-      "3rem": "3rem",
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.gray.700"),
+            a: {
+              color: theme("colors.primary.500"),
+              "&:hover": {
+                color: `${theme("colors.primary.600")} !important`,
+              },
+              code: { color: theme("colors.primary.400") },
+            },
+            h1: {
+              fontWeight: "700",
+              letterSpacing: theme("letterSpacing.tight"),
+              color: theme("colors.gray.900"),
+            },
+            h2: {
+              fontWeight: "700",
+              letterSpacing: theme("letterSpacing.tight"),
+              color: theme("colors.gray.900"),
+            },
+            h3: {
+              fontWeight: "600",
+              color: theme("colors.gray.900"),
+            },
+            "h4,h5,h6": {
+              color: theme("colors.gray.900"),
+            },
+            pre: {
+              backgroundColor: theme("colors.gray.800"),
+            },
+            p: {
+              marginTop: 0,
+            },
+            code: {
+              color: theme("colors.pink.500"),
+              backgroundColor: theme("colors.gray.100"),
+              paddingLeft: "4px",
+              paddingRight: "4px",
+              paddingTop: "2px",
+              paddingBottom: "2px",
+              borderRadius: "0.25rem",
+            },
+            "code::before": {
+              content: "none",
+            },
+            "code::after": {
+              content: "none",
+            },
+            details: {
+              backgroundColor: theme("colors.gray.100"),
+              paddingLeft: "4px",
+              paddingRight: "4px",
+              paddingTop: "2px",
+              paddingBottom: "2px",
+              borderRadius: "0.25rem",
+            },
+            hr: { borderColor: theme("colors.gray.200") },
+            "ol li::marker": {
+              fontWeight: "600",
+              color: theme("colors.gray.500"),
+            },
+            "ul li::marker": {
+              backgroundColor: theme("colors.gray.500"),
+            },
+            strong: { color: theme("colors.gray.600") },
+            blockquote: {
+              color: theme("colors.gray.900"),
+              borderLeftColor: theme("colors.gray.200"),
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: theme("colors.gray.300"),
+            a: {
+              color: theme("colors.primary.500"),
+              "&:hover": {
+                color: `${theme("colors.primary.400")} !important`,
+              },
+              code: { color: theme("colors.primary.400") },
+            },
+            h1: {
+              fontWeight: "700",
+              letterSpacing: theme("letterSpacing.tight"),
+              color: theme("colors.gray.100"),
+            },
+            h2: {
+              fontWeight: "700",
+              letterSpacing: theme("letterSpacing.tight"),
+              color: theme("colors.gray.100"),
+            },
+            h3: {
+              fontWeight: "600",
+              color: theme("colors.gray.100"),
+            },
+            "h4,h5,h6": {
+              color: theme("colors.gray.100"),
+            },
+            pre: {
+              backgroundColor: theme("colors.gray.800"),
+            },
+            code: {
+              backgroundColor: theme("colors.gray.800"),
+            },
+            details: {
+              backgroundColor: theme("colors.gray.800"),
+            },
+            hr: { borderColor: theme("colors.gray.700") },
+            "ol li::marker": {
+              fontWeight: "600",
+              color: theme("colors.gray.400"),
+            },
+            "ul li::marker": {
+              backgroundColor: theme("colors.gray.400"),
+            },
+            strong: { color: theme("colors.gray.100") },
+            thead: {
+              th: {
+                color: theme("colors.gray.100"),
+              },
+            },
+            tbody: {
+              tr: {
+                borderBottomColor: theme("colors.gray.700"),
+              },
+            },
+            blockquote: {
+              color: theme("colors.gray.100"),
+              borderLeftColor: theme("colors.gray.700"),
+            },
+          },
+        },
+      }),
     },
   },
-  corePlugins: {
-    preflight: true,
-  },
-  // plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 };
